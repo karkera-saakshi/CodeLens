@@ -1,5 +1,8 @@
 import express from 'express';
 import cors from "cors";
+import errorHandler from "./middlewares/errorHandler.js";
+import authRoutes from "./modules/auth/routes.js";
+import userRoutes from "./modules/user/routes.js";
 
 const app = express();
 
@@ -22,12 +25,23 @@ const corsOptions ={
 }
 
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
 
 app.use(express.json());
 
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'ok', message: 'CodeLens API is running' });
 });
+
+// Mount routes
+app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
+
+// 404 catch-all route
+app.use((req, res) => {
+  res.status(404).json({ success: false, message: "Route not found" });
+});
+
+// Global error handler middleware
+app.use(errorHandler);
 
 export default app;

@@ -1,9 +1,9 @@
 export default function Leaderboard() {
   return (
-    <div className="w-full px-6 py-20 md:py-32 min-h-screen flex flex-col justify-center items-center border-b-[4px] border-black bg-white overflow-hidden">
+    <div className="w-full px-4 sm:px-6 py-16 sm:py-20 md:py-32 min-h-screen flex flex-col justify-center items-center border-b-[4px] border-black bg-white overflow-hidden">
       <div className="max-w-6xl w-full mx-auto">
-        <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tighter text-black mb-12 sm:mb-16 text-center leading-none">Global Consistency</h2>
-        <div className="w-full overflow-x-auto shadow-[8px_8px_0_0_rgba(0,0,0,1)] md:shadow-[16px_16px_0_0_rgba(0,0,0,1)] border-[4px] border-black">
+        <h2 className="text-3xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tighter text-black mb-8 sm:mb-16 text-center leading-none">Global Consistency</h2>
+        <div className="w-full overflow-x-auto shadow-[4px_4px_0_0_rgba(0,0,0,1)] sm:shadow-[8px_8px_0_0_rgba(0,0,0,1)] md:shadow-[16px_16px_0_0_rgba(0,0,0,1)] border-[4px] border-black">
           <table className="w-full text-left border-collapse min-w-[600px]">
             <thead>
               <tr className="bg-black text-white uppercase tracking-widest font-black text-sm sm:text-xl border-b-[4px] border-black">

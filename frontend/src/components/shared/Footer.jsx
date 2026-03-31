@@ -17,8 +17,7 @@ export default function Footer() {
           <div className="flex flex-col space-y-5">
             <h3 className="font-black text-black uppercase tracking-tighter text-xl mb-2 border-b-[3px] border-black pb-2 inline-block">Platform</h3>
             <Link to="/dashboard" className="text-black font-black text-sm uppercase tracking-widest hover:underline underline-offset-8 decoration-[3px]">Dashboard</Link>
-            <Link to="/features" className="text-black font-black text-sm uppercase tracking-widest hover:underline underline-offset-8 decoration-[3px]">Features</Link>
-            <Link to="/pricing" className="text-black font-black text-sm uppercase tracking-widest hover:underline underline-offset-8 decoration-[3px]">Pricing</Link>
+            <Link to="/explore" className="text-black font-black text-sm uppercase tracking-widest hover:underline underline-offset-8 decoration-[3px]">Explore</Link>
           </div>
           
           <div className="flex flex-col space-y-5">

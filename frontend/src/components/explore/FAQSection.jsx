@@ -56,7 +56,7 @@ export default function FAQSection() {
                 </button>
                 <div
                   className="overflow-hidden transition-all duration-300 ease-in-out"
-                  style={{ maxHeight: isOpen ? "200px" : "0px" }}
+                  style={{ maxHeight: isOpen ? "500px" : "0px" }}
                 >
                   <p className="font-bold uppercase tracking-widest text-xs sm:text-sm text-black leading-relaxed px-6 sm:px-8 pb-6 sm:pb-8">
                     A: {item.a}

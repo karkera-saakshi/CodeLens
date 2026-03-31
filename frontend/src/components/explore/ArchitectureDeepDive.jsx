@@ -20,8 +20,8 @@ export default function ArchitectureDeepDive() {
             </button>
           </div>
         </div>
-        <div className="flex-1 w-full border-[4px] border-black p-6 sm:p-8 bg-gray-50 shadow-[8px_8px_0_0_rgba(0,0,0,1)] md:shadow-[16px_16px_0_0_rgba(0,0,0,1)] md:hover:-translate-y-2 transition-transform overflow-x-auto whitespace-pre text-left">
-          <div className="font-mono text-xs sm:text-sm font-bold text-black leading-loose">
+        <div className="flex-1 w-full border-[4px] border-black p-4 sm:p-6 md:p-8 bg-gray-50 shadow-[4px_4px_0_0_rgba(0,0,0,1)] sm:shadow-[8px_8px_0_0_rgba(0,0,0,1)] md:shadow-[16px_16px_0_0_rgba(0,0,0,1)] md:hover:-translate-y-2 transition-transform overflow-x-auto text-left">
+          <pre className="font-mono text-xs sm:text-sm font-bold text-black leading-loose whitespace-pre-wrap sm:whitespace-pre">
             <p className="text-gray-500">// Telemetry Payload Protocol</p>
             <p><span className="text-blue-600">const</span> <span className="text-black">engine</span> = <span className="text-purple-600">new</span> CodeLensCore();</p>
             <p><span className="text-blue-600">await</span> <span className="text-black">engine</span>.sync([<span className="text-green-700">'GITHUB'</span>, <span className="text-green-700">'LEETCODE'</span>]);</p>
@@ -31,7 +31,7 @@ export default function ArchitectureDeepDive() {
               [SYSTEM] Invoking Gemini AI model... <br />
               [OK] Roadmap generated in 240ms.
             </p>
-          </div>
+          </pre>
         </div>
       </div>
     </section>

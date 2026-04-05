@@ -7,6 +7,8 @@ import SignupPage from "./pages/SignupPage";
 import DashboardPage from "./pages/DashboardPage";
 import ExplorePage from "./pages/ExplorePage";
 import CodeforcesPage from "./pages/CodeforcesPage";
+import PracticePage from "./pages/PracticePage";
+import VelaAIPage from "./pages/VelaAIPage";
 import TermsPage from "./pages/TermsPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import ForgotPassword from "./components/auth/ForgotPassword";
@@ -53,6 +55,8 @@ export default function App() {
               } 
             />
             <Route path="/explore" element={<ExplorePage />} />
+            <Route path="/practice" element={<PracticePage />} />
+            <Route path="/vela-ai" element={<VelaAIPage />} />
             <Route 
               path="/codeforces"
               element={

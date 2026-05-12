@@ -15,6 +15,7 @@ export default function SignupPage() {
   
   const auth = useAuth();
   const navigate = useNavigate();
+  const isPasswordValid = password.length >= 6;
 
   useEffect(() => {
     let timer;
@@ -79,9 +80,9 @@ export default function SignupPage() {
     <div className="w-full flex-1 flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 py-12 sm:py-20 bg-white">
       <div className="w-full max-w-md border-4 border-black p-6 sm:p-8 md:p-12 bg-white shadow-[8px_8px_0_0_rgba(0,0,0,1)] md:shadow-[16px_16px_0_0_rgba(0,0,0,1)]">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tighter text-black mb-8 sm:mb-12">
-          {step === 1 ? 'SIGN UP' : 'VERIFY EMAIL'}
+          {step === 1 ? "SIGN UP" : "VERIFY EMAIL"}
         </h2>
-        
+
         {error && (
           <div className="mb-8 border-4 border-red-600 bg-red-50 p-4">
             <p className="text-sm font-black uppercase tracking-widest text-red-600">
@@ -96,8 +97,8 @@ export default function SignupPage() {
               <label className="text-sm font-black uppercase tracking-widest text-black">
                 Full Name
               </label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="w-full p-5 border-4 border-black rounded-none text-black font-bold focus:outline-none focus:ring-0 focus:border-gray-500"
@@ -109,8 +110,8 @@ export default function SignupPage() {
               <label className="text-sm font-black uppercase tracking-widest text-black">
                 Email
               </label>
-              <input 
-                type="email" 
+              <input
+                type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full p-5 border-4 border-black rounded-none text-black font-bold focus:outline-none focus:ring-0 focus:border-gray-500"
@@ -122,36 +123,48 @@ export default function SignupPage() {
               <label className="text-sm font-black uppercase tracking-widest text-black">
                 Password
               </label>
-              <input 
-                type="password" 
+              <input
+                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                aria-invalid={password && !isPasswordValid}
                 className="w-full p-5 border-4 border-black rounded-none text-black font-bold focus:outline-none focus:ring-0 focus:border-gray-500"
                 placeholder="••••••••"
                 required
               />
+              <div className="min-h-[16px]">
+                {password && !isPasswordValid && (
+                  <p
+                    role="alert"
+                    className="text-xs font-black uppercase tracking-widest text-red-600"
+                  >
+                    Password must be at least 6 characters
+                  </p>
+                )}
+              </div>
             </div>
-            <button 
-              type="submit" 
-              disabled={loading}
-              className="w-full mt-4 py-6 bg-white text-black text-xl font-black uppercase tracking-widest hover:bg-gray-100 transition-colors border-4 border-black rounded-none disabled:opacity-50 disabled:cursor-not-allowed"
+            <button
+              type="submit"
+              disabled={loading || (password && !isPasswordValid)}
+              className="w-full mt-1 py-6 bg-white text-black text-xl font-black uppercase tracking-widest hover:bg-gray-100 transition-colors border-4 border-black rounded-none disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'CREATING...' : 'CREATE ACCOUNT'}
+              {loading ? "CREATING..." : "CREATE ACCOUNT"}
             </button>
           </form>
         ) : (
           <form className="flex flex-col space-y-8" onSubmit={handleVerifyOtp}>
             <p className="text-sm font-black uppercase tracking-widest text-black text-center">
-              We've sent a 6-digit code to<br />
+              We've sent a 6-digit code to
+              <br />
               <span className="text-base">{email}</span>
             </p>
-            
+
             <div className="flex flex-col space-y-3">
               <label className="text-sm font-black uppercase tracking-widest text-black">
                 Verification Code
               </label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value.toUpperCase())}
                 maxLength={6}
@@ -160,15 +173,15 @@ export default function SignupPage() {
                 required
               />
             </div>
-            
-            <button 
-              type="submit" 
+
+            <button
+              type="submit"
               disabled={loading}
               className="w-full mt-4 py-6 bg-black text-white text-xl font-black uppercase tracking-widest hover:bg-gray-900 transition-colors border-4 border-black rounded-none disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'VERIFYING...' : 'VERIFY'}
+              {loading ? "VERIFYING..." : "VERIFY"}
             </button>
-            
+
             <div className="flex justify-center">
               <button
                 type="button"
@@ -176,15 +189,21 @@ export default function SignupPage() {
                 disabled={cooldown > 0 || loading}
                 className="text-sm font-black uppercase tracking-widest text-black underline underline-offset-4 decoration-[3px] hover:text-gray-600 disabled:opacity-50 disabled:cursor-not-allowed disabled:no-underline"
               >
-                {cooldown > 0 ? `RESEND CODE (${cooldown})` : 'RESEND CODE'}
+                {cooldown > 0 ? `RESEND CODE (${cooldown})` : "RESEND CODE"}
               </button>
             </div>
           </form>
         )}
-        
+
         <div className="mt-10 text-center border-t-4 border-black pt-8">
           <p className="text-sm font-black uppercase tracking-widest text-black">
-            Already have an account? <Link to="/login" className="underline underline-offset-8 decoration-[3px] hover:text-gray-600">Login</Link>
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="underline underline-offset-8 decoration-[3px] hover:text-gray-600"
+            >
+              Login
+            </Link>
           </p>
         </div>
       </div>

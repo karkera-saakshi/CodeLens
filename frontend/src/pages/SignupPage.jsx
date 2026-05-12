@@ -127,7 +127,7 @@ export default function SignupPage() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                aria-invalid={password && !isPasswordValid}
+                aria-invalid={password.length > 0 && !isPasswordValid}
                 className="w-full p-5 border-4 border-black rounded-none text-black font-bold focus:outline-none focus:ring-0 focus:border-gray-500"
                 placeholder="••••••••"
                 required
@@ -145,7 +145,7 @@ export default function SignupPage() {
             </div>
             <button
               type="submit"
-              disabled={loading || (password && !isPasswordValid)}
+              disabled={loading || (password.length > 0 && !isPasswordValid)}
               className="w-full mt-1 py-6 bg-white text-black text-xl font-black uppercase tracking-widest hover:bg-gray-100 transition-colors border-4 border-black rounded-none disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "CREATING..." : "CREATE ACCOUNT"}

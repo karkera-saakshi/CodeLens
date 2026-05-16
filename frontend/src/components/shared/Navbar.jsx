@@ -223,7 +223,7 @@ export default function Navbar() {
             {megaOpen && (
               <div
                 id="tools-mega-menu"
-                role="dialog"
+                role="region"
                 aria-label="Tools menu"
                 ref={megaRef}
                 onMouseEnter={handleMegaMouseEnter}

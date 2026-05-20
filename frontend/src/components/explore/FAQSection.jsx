@@ -20,12 +20,15 @@ export default function FAQSection() {
 
             return (
               <div
-                key={index}
+                key={item.id}
                 className="border-4 border-black shadow-[8px_8px_0_0_rgba(0,0,0,1)] md:shadow-[12px_12px_0_0_rgba(0,0,0,1)] bg-white w-full transition-transform md:hover:-translate-y-1"
               >
                 <button
+                  type="button"
                   onClick={() => toggle(index)}
                   className="w-full flex items-center justify-between gap-4 p-6 sm:p-8 text-left"
+                  aria-expanded={isOpen}
+                  aria-controls={`landing-faq-panel-${item.id}`}
                 >
                   <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tighter text-black leading-tight">
                     Q: {item.q}
@@ -33,6 +36,7 @@ export default function FAQSection() {
 
                   <span
                     className="text-2xl font-black shrink-0 transition-transform duration-200"
+                    aria-hidden="true"
                     style={{
                       transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
                     }}
@@ -42,12 +46,16 @@ export default function FAQSection() {
                 </button>
 
                 <div
-                  className="overflow-hidden transition-all duration-300 ease-in-out"
-                  style={{ maxHeight: isOpen ? "500px" : "0px" }}
+                  id={`landing-faq-panel-${item.id}`}
+                  className={`grid transition-all duration-300 ease-in-out ${
+                    isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                  }`}
                 >
-                  <p className="font-bold uppercase tracking-widest text-xs sm:text-sm text-black leading-relaxed px-6 sm:px-8 pb-6 sm:pb-8">
-                    A: {item.a}
-                  </p>
+                  <div className="overflow-hidden">
+                    <p className="font-bold uppercase tracking-widest text-xs sm:text-sm text-black leading-relaxed px-6 sm:px-8 pb-6 sm:pb-8">
+                      A: {item.a}
+                    </p>
+                  </div>
                 </div>
               </div>
             );
@@ -58,7 +66,7 @@ export default function FAQSection() {
         <div className="mt-12 flex justify-center">
           <Link
             to="/faq"
-            className="border-3 border-black px-5 py-2 text-sm sm:text-base font-black uppercase bg-white tracking-widest shadow-[5px_5px_0_0_rgba(0,0,0,1)] text-black transition-all duration-200 hover:bg-black hover:text-white hover:translate-x-1 hover:translate-y-1"
+            className="border-2 border-black px-5 py-2 text-sm sm:text-base font-black uppercase bg-white tracking-widest shadow-[5px_5px_0_0_rgba(0,0,0,1)] text-black transition-all duration-200 hover:bg-black hover:text-white hover:translate-x-1 hover:translate-y-1"
           >
             View All FAQs
           </Link>

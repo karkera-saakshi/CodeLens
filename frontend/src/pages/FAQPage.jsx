@@ -1,19 +1,29 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { faqs } from "../data/faqs";
 
-const supportTopics = [
-  "Platform tracking",
-  "Data privacy",
-  "Open source",
-  "Account setup",
-];
+const supportTopics = [...new Set(faqs.map((item) => item.category))];
 
 export default function FAQPage() {
-  const [openIdx, setOpenIdx] = useState(0);
+  const [openIdx, setOpenIdx] = useState(null);
+  const itemRefs = useRef([]);
+
+  const toggleFaq = (index, shouldScroll = false) => {
+    setOpenIdx((currentIndex) => (currentIndex === index ? null : index));
+
+    if (shouldScroll) {
+      window.requestAnimationFrame(() => {
+        itemRefs.current[index]?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      });
+    }
+  };
 
   return (
     <main className="w-full bg-white text-black">
+      <title>FAQ - CodeLens</title>
       <section className="border-b-4 border-black px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <div>
@@ -53,9 +63,9 @@ export default function FAQPage() {
             <div className="mt-6 flex flex-col gap-3">
               {faqs.map((item, index) => (
                 <button
-                  key={item.q}
+                  key={item.id}
                   type="button"
-                  onClick={() => setOpenIdx(index)}
+                  onClick={() => toggleFaq(index, true)}
                   className={`border-2 px-4 py-3 text-left text-xs font-black uppercase tracking-widest transition-colors ${
                     openIdx === index
                       ? "border-white bg-white text-black"
@@ -74,25 +84,32 @@ export default function FAQPage() {
 
               return (
                 <article
-                  key={item.q}
+                  key={item.id}
+                  ref={(element) => {
+                    itemRefs.current[index] = element;
+                  }}
                   className="border-4 border-black bg-white shadow-[8px_8px_0_0_rgba(0,0,0,1)]"
                 >
                   <button
                     type="button"
-                    onClick={() => setOpenIdx(isOpen ? null : index)}
+                    onClick={() => toggleFaq(index)}
                     className="flex w-full items-center justify-between gap-6 p-6 text-left sm:p-8"
                     aria-expanded={isOpen}
+                    aria-controls={`faq-panel-${item.id}`}
                   >
                     <span className="text-2xl font-black uppercase leading-tight tracking-tight sm:text-4xl">
                       {item.q}
                     </span>
-                    <span className="text-4xl font-black leading-none">
+                    <span className="text-4xl font-black leading-none" aria-hidden="true">
                       {isOpen ? "-" : "+"}
                     </span>
                   </button>
 
                   {isOpen && (
-                    <div className="border-t-4 border-black px-6 py-6 sm:px-8">
+                    <div
+                      id={`faq-panel-${item.id}`}
+                      className="border-t-4 border-black px-6 py-6 sm:px-8"
+                    >
                       <p className="max-w-3xl text-base font-bold leading-relaxed text-black sm:text-lg">
                         {item.a}
                       </p>

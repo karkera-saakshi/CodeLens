@@ -68,7 +68,6 @@ const MEGA_MENU_ITEMS = [
 ];
 
 // ─── Tag Badge ─────────────────────────────────────────────────────────────────
-// Refined: thinner border, tighter tracking, color-coded per type
 const TAG_COLORS = {
   HOT: "border-orange-400 text-orange-500",
   NEW: "border-emerald-400 text-emerald-600",
@@ -127,25 +126,20 @@ function MegaMenuPanel({ megaRef, onMouseEnter, onMouseLeave, onClose, megaTrigg
       className="absolute top-full left-1/2 mt-4 w-[620px] bg-white border border-zinc-200 shadow-2xl shadow-black/8 z-50 rounded-sm"
       style={{ transform: "translateX(-50%)" }}
     >
-      {/* Single thin top accent — replaces aggressive border-4 */}
       <div className="h-0.5 w-full bg-black rounded-t-sm" />
 
       <div className="p-5">
-        {/* Section label */}
         <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400 mb-4 pb-3 border-b border-zinc-100">
           AI-Powered Tools — GSSoC '26
         </p>
 
-        {/* Item grid — gap-px with bg-zinc-100 creates razor-thin dividers */}
         <div className="grid grid-cols-2 gap-px bg-zinc-100 rounded-[2px] overflow-hidden">
           {MEGA_MENU_ITEMS.map((item) => {
             const hasSubmenu = item.submenu && item.submenu.length > 0;
 
-            // ── Contest Arsenal: full-width with nested submenu ────────────
             if (hasSubmenu) {
               return (
                 <div key={item.label} className="col-span-2">
-                  {/* Parent header */}
                   <div className="bg-zinc-900 text-white px-4 py-3">
                     <div className="flex items-center gap-2">
                       <span className="text-sm leading-none opacity-70">{item.icon}</span>
@@ -156,7 +150,6 @@ function MegaMenuPanel({ megaRef, onMouseEnter, onMouseLeave, onClose, megaTrigg
                       {item.desc}
                     </p>
                   </div>
-                  {/* Submenu grid */}
                   <div className="grid grid-cols-2 gap-px bg-zinc-100">
                     {item.submenu.map((sub) => (
                       <Link
@@ -181,7 +174,6 @@ function MegaMenuPanel({ megaRef, onMouseEnter, onMouseLeave, onClose, megaTrigg
               );
             }
 
-            // ── Standard grid item ─────────────────────────────────────────
             const Wrapper = item.to ? Link : "div";
             const wrapperProps = item.to ? { to: item.to, onClick: onClose } : {};
 
@@ -209,7 +201,6 @@ function MegaMenuPanel({ megaRef, onMouseEnter, onMouseLeave, onClose, megaTrigg
           })}
         </div>
 
-        {/* Footer strip */}
         <div className="mt-4 pt-3 border-t border-zinc-100 flex items-center justify-between">
           <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-zinc-400">
             More tools shipping soon
@@ -240,14 +231,12 @@ export default function Navbar() {
   const navigate  = useNavigate();
   const location  = useLocation();
 
-  // ── Scroll elevation shadow ──────────────────────────────────────────────
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 4);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // ── Close mega on outside click ──────────────────────────────────────────
   useEffect(() => {
     const handler = (e) => {
       if (
@@ -263,20 +252,27 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  // ── Close mobile menu on route change ───────────────────────────────────
   useEffect(() => {
     setIsMenuOpen(false);
     setMobileMegaOpen(false);
   }, [location.pathname]);
 
+  // ── Lock body scroll when mobile menu is open ────────────────────────────
   useEffect(() => {
-  return () => {
-    clearTimeout(megaLeaveTimer.current);
-  };
-}, []);
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [isMenuOpen]);
 
+  useEffect(() => {
+    return () => {
+      clearTimeout(megaLeaveTimer.current);
+    };
+  }, []);
 
-  // ── Handlers ────────────────────────────────────────────────────────────
   const handleLogout = () => {
     logout();
     navigate("/");
@@ -290,19 +286,17 @@ export default function Navbar() {
   };
 
   const handleMegaMouseEnter = () => {
-  clearTimeout(megaLeaveTimer.current);
-  setMegaOpen(true);
-
-  setTimeout(() => {
-    firstMenuItemRef.current?.focus();
-  }, 0);
+    clearTimeout(megaLeaveTimer.current);
+    setMegaOpen(true);
+    setTimeout(() => {
+      firstMenuItemRef.current?.focus();
+    }, 0);
   };
 
   const handleMegaMouseLeave = () => {
     megaLeaveTimer.current = setTimeout(() => setMegaOpen(false), 120);
   };
 
-  // ── User helpers ─────────────────────────────────────────────────────────
   const getUserDisplayName = () => {
     if (!user) return "";
     return user.name
@@ -318,8 +312,6 @@ export default function Navbar() {
     return "U";
   };
 
-  // ── Active link style ────────────────────────────────────────────────────
-  // font-semibold + thin underline instead of font-black + decoration-4
   const isActive    = (path) => location.pathname === path;
   const navLinkCls  = (path) =>
     `text-[13px] font-semibold uppercase tracking-[0.09em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 ${
@@ -328,7 +320,6 @@ export default function Navbar() {
         : "text-zinc-500 hover:text-black"
     }`;
 
-  // ── Mobile link row style ────────────────────────────────────────────────
   const mobileLinkCls =
     "px-5 py-3.5 text-[13px] font-semibold uppercase tracking-[0.09em] text-zinc-600 border-b border-zinc-100 hover:bg-zinc-50 hover:text-black transition-colors duration-150 flex items-center justify-between";
 
@@ -341,7 +332,6 @@ export default function Navbar() {
       {/* ── Main Row ─────────────────────────────────────────────────────── */}
       <div className="max-w-[1400px] mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 h-14 gap-4">
 
-        {/* ── Wordmark ──────────────────────────────────────────────────── */}
         <Link
           to="/"
           onClick={closeMenu}
@@ -350,7 +340,6 @@ export default function Navbar() {
           CODELENS
         </Link>
 
-        {/* ── Desktop Centre Nav ────────────────────────────────────────── */}
         <div className="hidden lg:flex items-center gap-7 xl:gap-8">
           {isAuthenticated && (
             <Link to="/dashboard" className={navLinkCls("/dashboard")}>
@@ -374,7 +363,6 @@ export default function Navbar() {
             </Link>
           )}
 
-          {/* ── Tools Mega Menu Trigger ───────────────────────────────── */}
           <div
             className="relative"
             onMouseEnter={handleMegaMouseEnter}
@@ -392,7 +380,6 @@ export default function Navbar() {
                 if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault();
                   setMegaOpen((v) => !v);
-                  
                   setTimeout(() => {
                     firstMenuItemRef.current?.focus();
                   }, 0);
@@ -431,10 +418,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* ── Desktop Right Controls ────────────────────────────────────── */}
         <div className="hidden lg:flex items-center gap-2.5 xl:gap-3 flex-shrink-0">
-
-          {/* APEX — sole primary CTA, inverted solid button */}
           <Link
             to="/apex-ai"
             title="APEX — Advanced Performance Excellence eXecutive. Your AI-powered growth strategist."
@@ -446,15 +430,12 @@ export default function Navbar() {
 
           {!isAuthenticated ? (
             <>
-              {/* Login — text-only, minimal weight */}
               <Link
                 to="/login"
                 className="px-2 text-[13px] font-semibold uppercase tracking-[0.09em] text-zinc-500 hover:text-black transition-colors duration-150"
               >
                 Login
               </Link>
-
-              {/* Sign Up — outlined, secondary CTA */}
               <Link
                 to="/signup"
                 className="px-4 py-2 text-[12px] font-bold uppercase tracking-[0.1em] text-black border border-zinc-800 hover:bg-black hover:text-white transition-colors duration-150 rounded-[2px]"
@@ -464,7 +445,6 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              {/* User identity chip */}
               <div className="flex items-center gap-2 pl-3 border-l border-zinc-200">
                 <span className="w-7 h-7 flex items-center justify-center bg-black text-white font-bold text-xs rounded-[2px] flex-shrink-0">
                   {getUserInitial()}
@@ -473,16 +453,12 @@ export default function Navbar() {
                   {getUserDisplayName()}
                 </span>
               </div>
-
-              {/* GitHub Data — ghost/outline button */}
               <Link
                 to="/github-intelligence"
                 className="px-3.5 py-2 text-[11px] font-semibold uppercase tracking-[0.09em] text-zinc-500 border border-zinc-200 hover:border-zinc-700 hover:text-black transition-colors duration-150 rounded-[2px]"
               >
                 GitHub
               </Link>
-
-              {/* Logout — lowest visual weight, plain text */}
               <button
                 onClick={handleLogout}
                 className="px-2 text-[11px] font-semibold uppercase tracking-[0.09em] text-zinc-400 hover:text-black transition-colors duration-150"
@@ -493,7 +469,6 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* ── Mobile Right: APEX + Hamburger ───────────────────────────── */}
         <div className="lg:hidden flex items-center gap-2.5">
           <Link
             to="/apex-ai"
@@ -503,7 +478,6 @@ export default function Navbar() {
             APEX
           </Link>
 
-          {/* Animated hamburger — thinner, softer border */}
           <button
             onClick={toggleMenu}
             className="flex flex-col justify-center items-center w-9 h-9 gap-[5px] border border-zinc-200 hover:border-zinc-400 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 rounded-[2px]"
@@ -531,9 +505,14 @@ export default function Navbar() {
 
       {/* ── Mobile Menu ──────────────────────────────────────────────────── */}
       {isMenuOpen && (
-        <div className="lg:hidden w-full bg-white border-t border-zinc-100">
-          <div className="flex flex-col">
-
+        <div
+          className="lg:hidden w-full bg-white border-t border-zinc-100 flex flex-col min-h-0"
+          style={{ maxHeight: "calc(100svh - 3.5rem)", overflow: "hidden" }}
+        >
+          {/* Scrollable area */}
+          <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain"
+            style={{ WebkitOverflowScrolling: "touch" }}
+          >
             {/* Nav links */}
             {isAuthenticated && (
               <Link to="/dashboard" onClick={closeMenu} className={mobileLinkCls}>
@@ -577,7 +556,6 @@ export default function Navbar() {
                     const isExpanded = expandedSubmenu === item.label;
                     return (
                       <div key={item.label} className="border-b border-zinc-100 last:border-0">
-                        {/* Accordion toggle */}
                         <button
                           aria-expanded={isExpanded}
                           onClick={() =>
@@ -626,7 +604,6 @@ export default function Navbar() {
                     );
                   }
 
-                  // Standard tool item
                   const Wrapper     = item.to ? Link : "div";
                   const wrapperProps = item.to ? { to: item.to, onClick: closeMenu } : {};
 
@@ -655,8 +632,10 @@ export default function Navbar() {
                 })}
               </div>
             )}
+          </div>
 
-            {/* ── Auth section ──────────────────────────────────────────── */}
+          {/* ── Auth section — pinned to bottom ──────────────────────────── */}
+          <div className="flex-shrink-0 border-t border-zinc-100 bg-white">
             {!isAuthenticated ? (
               <>
                 <Link to="/login" onClick={closeMenu} className={mobileLinkCls}>
@@ -674,7 +653,6 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                {/* User identity row */}
                 <div className="px-5 py-3.5 border-b border-zinc-100 flex items-center gap-3 bg-zinc-50/80">
                   <span className="w-8 h-8 flex items-center justify-center bg-black text-white font-bold text-sm rounded-[2px] flex-shrink-0">
                     {getUserInitial()}

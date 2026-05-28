@@ -51,14 +51,18 @@ export default function Footer() {
               Resources
             </h3>
             <div className="flex flex-col gap-4">
-              {["Documentation", "Changelog", "Bug Reports"].map((l) => (
-                <a
-                  key={l}
-                  href="#"
+              {[
+                { label: "Documentation", to: "#" },
+                { label: "Changelog", to: "#" },
+                { label: "Bug Reports", to: "/bug-reports" }
+              ].map((l) => (
+                <Link
+                  key={l.label}
+                  to={l.to}
                   className="text-sm font-black uppercase tracking-widest text-black hover:underline underline-offset-8 decoration-[3px] hover:opacity-60 transition-opacity"
                 >
-                  {l}
-                </a>
+                  {l.label}
+                </Link>
               ))}
             </div>
           </div>

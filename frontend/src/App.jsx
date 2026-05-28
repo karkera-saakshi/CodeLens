@@ -25,6 +25,7 @@ import GitHubCallbackPage from "./pages/GitHubCallbackPage";
 import ProtectedRoute from "./components/shared/ProtectedRoute";
 import PublicRoute from "./components/shared/PublicRoute";
 import FAQSection from "./components/explore/FAQSection";
+import BugReportsPage from "./pages/BugReportsPage";
 export default function App() {
   return (
     <AuthProvider>
@@ -101,6 +102,7 @@ export default function App() {
             />
             <Route path="/terms" element={<TermsPage/>} />
             <Route path="/privacy" element={<PrivacyPage/>} />
+            <Route path="/bug-reports" element={<BugReportsPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </MainLayout>

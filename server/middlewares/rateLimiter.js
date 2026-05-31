@@ -39,6 +39,8 @@ export const githubSyncLimiter = rateLimit({
     if (req.user && req.user._id) {
       return req.user._id.toString();
     }
-    return req.ip;
+    // Fallback to forwarded IP or remote address to bypass express-rate-limit IPv6 validation error
+    // while still effectively rate-limiting by IP for unauthenticated users.
+    return (req.headers["x-forwarded-for"] || req.socket.remoteAddress || "unknown").toString();
   }
 });

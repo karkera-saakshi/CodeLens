@@ -389,6 +389,9 @@ export default function Navbar() {
           <Link to="/explore" className={navLinkCls("/explore")}>
             Explore
           </Link>
+          <Link to="/faq" className={navLinkCls("/faq")}>
+            FAQ
+          </Link>
 
           {isAuthenticated && (
             <Link to="/codeforces" className={navLinkCls("/codeforces")}>

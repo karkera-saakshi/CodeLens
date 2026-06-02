@@ -113,6 +113,7 @@ export default function App() {
             <Route path="/terms" element={<TermsPage/>} />
             <Route path="/privacy" element={<PrivacyPage/>} />
             <Route path="/bug-reports" element={<BugReportsPage />} />
+            <Route path="/faq" element={<FAQPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </MainLayout>

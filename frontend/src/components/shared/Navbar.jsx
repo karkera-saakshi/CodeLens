@@ -346,6 +346,16 @@ export default function Navbar() {
     return "U";
   };
 
+  const LogoutButton = ({ className = "" }) => (
+    <button
+      type="button"
+      onClick={handleLogout}
+      className={`px-2 text-[11px] font-semibold uppercase tracking-[0.09em] text-zinc-400 hover:text-black transition-colors duration-150 ${className}`}
+    >
+      Logout
+    </button>
+  );
+
   // ── Active link style ────────────────────────────────────────────────────
   // font-semibold + thin underline instead of font-black + decoration-4
   const isActive   = (path) => location.pathname === path;
@@ -517,12 +527,7 @@ export default function Navbar() {
               </Link>
 
               {/* Logout — lowest visual weight, plain text */}
-              <button
-                onClick={handleLogout}
-                className="px-2 text-[11px] font-semibold uppercase tracking-[0.09em] text-zinc-400 hover:text-black transition-colors duration-150"
-              >
-                Logout
-              </button>
+              <LogoutButton />
             </>
           )}
         </div>
@@ -735,12 +740,7 @@ export default function Navbar() {
                   GitHub Data <span className="text-zinc-300 text-sm">→</span>
                 </Link>
 
-                <button
-                  onClick={handleLogout}
-                  className="w-full px-5 py-3.5 text-[13px] font-semibold uppercase tracking-[0.09em] text-zinc-400 hover:text-black border-b border-zinc-100 hover:bg-zinc-50 transition-colors duration-150 text-left"
-                >
-                  Logout
-                </button>
+                <LogoutButton className="w-full px-5 py-3.5 text-[13px] border-b border-zinc-100 hover:bg-zinc-50 text-left" />
               </>
             )}
           </div>

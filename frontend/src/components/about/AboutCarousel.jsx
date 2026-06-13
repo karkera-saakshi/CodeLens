@@ -35,26 +35,54 @@ const slides = [
 
 export default function AboutCarousel() {
   const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
+    if (paused) return;
+
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % slides.length);
     }, 4500);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [paused]);
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div
+      className="max-w-6xl mx-auto"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+      tabIndex={0}
+      aria-roledescription="carousel"
+      aria-label="Platform highlights"
+      onKeyDown={(e) => {
+        if (e.key === "ArrowRight") {
+          setCurrent((prev) => (prev + 1) % slides.length);
+        }
 
+        if (e.key === "ArrowLeft") {
+          setCurrent(
+            (prev) => (prev - 1 + slides.length) % slides.length
+          );
+        }
+      }}
+    >
       <div className="relative bg-black text-white rounded-3xl p-10 md:p-14 overflow-hidden min-h-[320px]">
 
-        <div className="absolute top-4 right-6 text-[90px] md:text-[140px] font-black text-zinc-800 select-none">
+        <div
+          aria-hidden="true"
+          className="absolute top-4 right-6 text-[90px] md:text-[140px] font-black text-zinc-800 select-none"
+        >
           {slides[current].stat}
         </div>
 
-        <div className="relative z-10 max-w-2xl">
-
+        <div
+          className="relative z-10 max-w-2xl"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           <p className="uppercase tracking-[0.25em] text-xs text-zinc-400 mb-4">
             Platform Highlight
           </p>
@@ -66,17 +94,18 @@ export default function AboutCarousel() {
           <p className="text-zinc-300 text-lg leading-8">
             {slides[current].description}
           </p>
-
         </div>
-
       </div>
 
       <div className="flex justify-center gap-3 mt-8">
-
-        {slides.map((_, index) => (
+        {slides.map((slide, index) => (
           <button
             key={index}
             onClick={() => setCurrent(index)}
+            aria-label={`Go to slide ${index + 1}: ${slide.title}`}
+            aria-current={
+              current === index ? "true" : undefined
+            }
             className={`transition-all duration-300 rounded-full ${
               current === index
                 ? "w-10 h-3 bg-black"
@@ -84,9 +113,7 @@ export default function AboutCarousel() {
             }`}
           />
         ))}
-
       </div>
-
     </div>
   );
 }

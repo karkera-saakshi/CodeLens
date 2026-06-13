@@ -1,7 +1,7 @@
 import AboutCarousel from "../components/about/AboutCarousel";
+import { Link } from "react-router-dom";
 
-export default function AboutCodeLensPage() {
-  const problems = [
+const problems = [
     {
       title: "Learning Inconsistency",
       desc: "Learners often struggle to maintain a consistent learning routine.",
@@ -54,7 +54,7 @@ export default function AboutCodeLensPage() {
       desc: "Grow together through collaboration and contributions.",
     },
   ];
-
+export default function AboutCodeLensPage() {
   return (
     <div className="w-full overflow-hidden">
 
@@ -340,12 +340,12 @@ export default function AboutCodeLensPage() {
           Explore CodeLens and unlock consistent growth.
         </p>
 
-        <a
-          href="/explore"
+        <Link
+          to="/explore"
           className="inline-block px-10 py-4 bg-black text-white rounded-xl font-semibold hover:opacity-90"
         >
           Explore Platform
-        </a>
+        </Link>
 
       </section>
 

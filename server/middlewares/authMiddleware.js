@@ -1,4 +1,4 @@
-import { verifyToken, verifyRefreshToken, generateAccessToken, setAccessTokenCookie } from "../utils/tokenHelper.js";
+import { verifyToken, verifyRefreshToken, generateAccessToken, setAccessTokenCookie, clearAuthCookies } from "../utils/tokenHelper.js";
 import User from "../models/User.js";
 import ApiError from "../utils/ApiError.js";
 import bcrypt from "bcryptjs";
@@ -36,6 +36,8 @@ const authMiddleware = async (req, res, next) => {
       throw new ApiError(401, "Access denied. No token provided.");
     }
 
+    let prefetchedUser = null;
+ 
     let decoded;
     try {
       decoded = verifyToken(token);
@@ -47,79 +49,93 @@ const authMiddleware = async (req, res, next) => {
           const userId = refreshDecoded.userId || refreshDecoded.id || refreshDecoded._id;
           // Validate refresh token against stored hash
           const refreshUser = await User.findById(userId).select("+security.refreshTokenHash");
+          
           if (!refreshUser) {
             throw new ApiError(401, "User not found.");
           }
+          
           const storedHash = refreshUser.security?.refreshTokenHash;
           if (!storedHash) {
-            throw new ApiError(
-               401,
-            "Session has been revoked. Please log in again."
-            );
+            clearAuthCookies(res);
+            throw new ApiError(401, "Session has been revoked. Please log in again.");
           }
+          
           const isValid = await bcrypt.compare(
             req.cookies.refreshToken,
             storedHash
-            );
-
+          );
+          
           if (!isValid) {
+            await User.findByIdAndUpdate(userId, {
+              $unset: { "security.refreshTokenHash": "" }
+            });
+            
+            clearAuthCookies(res);
+            
             throw new ApiError(
             401,
             "Invalid session. Please log in again."
             );
           }
-          const newAccessToken = generateAccessToken({userId: refreshUser._id, email: refreshUser.email, role: refreshUser.role
+          const newAccessToken = generateAccessToken({
+            userId: refreshUser._id,
+            email: refreshUser.email,
+            role: refreshUser.role
           });
 
           // Set only the new access token cookie
           setAccessTokenCookie(res, newAccessToken);
 
-          decoded = {userId: refreshUser._id ,email: refreshUser.email,  role: refreshUser.role
-        };
+          decoded = {
+            userId: refreshUser._id,
+            email: refreshUser.email,
+            role: refreshUser.role
+         };
         
+          prefetchedUser = refreshUser;
+
         } catch (error) {
           if (error instanceof ApiError) {
-          throw error;
+            throw error;
           }
 
           throw new ApiError(
             401,
             "Session expired. Please log in again."
           );
-
-      } 
-      }else {
-        throw new ApiError(401, "Invalid or expired token.");
+        } 
+      } else {
+          throw new ApiError(401, "Invalid or expired token.");
+        }
       }
-    }
 
-    const userId = decoded.userId || decoded.id || decoded._id;
+      const userId = decoded.userId || decoded.id || decoded._id;
 
-    if (!userId) {
-      throw new ApiError(401, "Invalid token payload.");
-    }
+      if (!userId) {
+        throw new ApiError(401, "Invalid token payload.");
+      }
 
-    const user = await User.findById(userId).select("-password");
+      const user = prefetchedUser ?? await User.findById(userId).select("-password");
+      if (!user) {
+        throw new ApiError(401, "User not found or account deleted.");
+      }
 
-    if (!user) {
-      throw new ApiError(401, "User not found or account deleted.");
-    }
+      req.user = user;
+      next();
+    } catch (error) {
+      if (error instanceof ApiError) {
+        return res.status(error.statusCode).json({
+          success: false,
+          message: error.message
+        });
+      }
 
-    req.user = user;
-    next();
-  } catch (error) {
-    if (error instanceof ApiError) {
-      return res.status(error.statusCode).json({
+      return res.status(401).json({
         success: false,
-        message: error.message
+        message: "Invalid or expired token."
       });
+    
     }
-
-    return res.status(401).json({
-      success: false,
-      message: "Invalid or expired token."
-    });
-  }
-};
+  };
 
 export default authMiddleware;

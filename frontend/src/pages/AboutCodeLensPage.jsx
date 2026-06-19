@@ -60,7 +60,7 @@ export default function AboutCodeLensPage() {
     <div className="w-full overflow-hidden">
 
       {/* HERO */}
-      <section className="bg-black text-white py-20 px-6">
+      <section className="bg-black text-white py-20 px-6 sm:px-10 lg:px-16">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
 
           <div>
@@ -316,9 +316,9 @@ export default function AboutCodeLensPage() {
       </section>
 
       {/* COMMUNITY */}
-      <section className="bg-black text-white py-20 px-6">
+      <section className="bg-black text-white py-20 px-6 sm:px-10 lg:px-16">
 
-        <div className="max-w-6xl mx-auto text-center">
+        <div className="max-w-7xl mx-auto text-center">
           <p className="uppercase tracking-[0.3em] text-xs text-zinc-500 mb-3">
             07 /
           </p>
@@ -352,7 +352,7 @@ export default function AboutCodeLensPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 px-6 text-center">
+      <section className="py-20 px-6 sm:px-10 lg:px-16 text-center">
         <p className="uppercase tracking-[0.3em] text-xs text-zinc-500 mb-3">
           08 /
         </p>

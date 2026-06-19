@@ -13,7 +13,6 @@ import RoadmapFAQ from "../components/faq/RoadmapFAQ";
 import AccessibilityFAQ from "../components/faq/AccessibilityFAQ";
 
 
-
 export default function FAQPage() {
 
   const navigate = useNavigate();
@@ -28,15 +27,9 @@ export default function FAQPage() {
   };
 
 
-
   return (
     <main className="w-full overflow-x-hidden bg-white text-black">
     
-      <title>FAQ - CodeLens</title>
-      <meta
-        name="description"
-        content="Frequently asked questions about CodeLens – platform tracking, data privacy, open source contributions, and more."
-      />
       <section className="border-b-4 border-black px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           
@@ -57,11 +50,54 @@ export default function FAQPage() {
                 protecting profile data, and contributing to CodeLens.
             </p>
 
-            <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-2">
+            <div className="mt-8 flex flex-wrap gap-3">
 
-              <span className="border-2 border-black px-3 py-3 text-center text-[11px] font-black uppercase tracking-widest">Analytics</span>
-              <span className="border-2 border-black px-3 py-3 text-center text-[11px] font-black uppercase tracking-widest">
-              Privacy
+              <span className="border-2 border-black px-3 py-3 text-center text-[11px] font-black uppercase tracking-widest whitespace-nowrap bg-white">
+                Getting Started
+              </span>
+
+              <span className="border-2 border-black px-3 py-3 text-center text-[11px] font-black uppercase tracking-widest whitespace-nowrap bg-white">
+                Platform Integration
+              </span>
+
+              <span className="border-2 border-black px-3 py-3 text-center text-[11px] font-black uppercase tracking-widest whitespace-nowrap bg-white">
+                Analytics
+              </span>
+
+              <span className="border-2 border-black px-3 py-3 text-center text-[11px] font-black uppercase tracking-widest whitespace-nowrap bg-white">
+                Privacy
+              </span>
+
+              <span className="border-2 border-black px-3 py-3 text-center text-[11px] font-black uppercase tracking-widest whitespace-nowrap bg-white">
+                Account Management
+              </span>
+
+              <span className="border-2 border-black px-3 py-3 text-center text-[11px] font-black uppercase tracking-widest whitespace-nowrap bg-white">
+                Open Source
+              </span>
+
+              <span className="border-2 border-black px-3 py-3 text-center text-[11px] font-black uppercase tracking-widest whitespace-nowrap bg-white">
+                Legal Compliance
+              </span>
+
+              <span className="border-2 border-black px-3 py-3 text-center text-[11px] font-black uppercase tracking-widest whitespace-nowrap bg-white">
+                Troubleshooting
+              </span>
+
+              <span className="border-2 border-black px-3 py-3 text-center text-[11px] font-black uppercase tracking-widest whitespace-nowrap bg-white">
+                Performance
+              </span>
+
+              <span className="border-2 border-black px-3 py-3 text-center text-[11px] font-black uppercase tracking-widest whitespace-nowrap bg-white">
+                Community
+              </span>
+
+              <span className="border-2 border-black px-3 py-3 text-center text-[11px] font-black uppercase tracking-widest whitespace-nowrap bg-white">
+                Roadmap
+              </span>
+
+              <span className="border-2 border-black px-3 py-3 text-center text-[11px] font-black uppercase tracking-widest whitespace-nowrap bg-white">
+                Accessibility
               </span>
 
             </div>

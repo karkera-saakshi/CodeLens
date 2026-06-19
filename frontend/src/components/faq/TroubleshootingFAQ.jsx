@@ -6,9 +6,10 @@ export default function TroubleshootingFAQ() {
     <section
       id="troubleshooting"
       aria-labelledby="troubleshooting-title"
-      className="py-20 px-6 bg-white text-black border-b-4 border-black"
+      className="py-20 px-6 sm:px-10 lg:px-16 bg-white text-black border-b-4 border-black"
     >
-      <div className="lg:px-10">
+
+      <div className="mx-auto max-w-7xl">
 
         <h2
           id="troubleshooting-title"
@@ -20,6 +21,7 @@ export default function TroubleshootingFAQ() {
         <FAQAccordion faqs={troubleshootingFaqs} />
 
       </div>
+
     </section>
   );
 }

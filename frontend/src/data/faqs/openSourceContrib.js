@@ -12,7 +12,7 @@ export const openSourceContribFaqs = [
   {
     id: "tech-stack",
     q: "What tech stack does CodeLens use?",
-    a: "CodeLens uses modern frontend and backend technologies for analytics and integrations.",
+    a: "CodeLens combines frontend interfaces with backend services that support analytics, platform integrations, and user data processing.",
   },
   {
     id: "report-bug",
@@ -22,6 +22,6 @@ export const openSourceContribFaqs = [
   {
     id: "workflow",
     q: "What is the contribution workflow?",
-    a: "Fork repository, create branch, make changes, push code, and open a pull request for review.",
+    a: "Contributors follow the workflow of forking the repository, creating a branch, making changes, and submitting a pull request for review.",
   },
 ];

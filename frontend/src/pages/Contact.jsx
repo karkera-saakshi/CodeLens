@@ -7,11 +7,7 @@ const Contact = () => {
 
     return (
         <main>
-            <title>Contact- CodeLens</title>
-            <meta
-                name="description"
-                content="Get in touch with the CodeLens team. Have questions, feedback, or need support? Contact us and we'll be happy to help."
-            />
+            
             <section className="border-b-4 border-black px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
                 <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
                     <div className="flex flex-col gap-3">

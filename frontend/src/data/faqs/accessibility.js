@@ -6,7 +6,7 @@ export const accessibilityFaqs = [
   },
   {
     id: "keyboard-nav",
-    q: "Are there keyboard navigation shortcuts?",
+    q: "Does CodeLens support keyboard navigation?",
     a: "Interactive elements are designed to remain keyboard accessible where possible.",
   },
   {
@@ -20,8 +20,8 @@ export const accessibilityFaqs = [
   a: "The interface is designed to remain usable across desktop, tablet, and mobile screen sizes.",
   },
   {
-  id: "accessible-navigation",
-  q: "Can users navigate without using a mouse?",
-  a: "Interactive elements are built to support keyboard navigation for improved accessibility.",
+  id: "reduced-motion",
+  q: "Does CodeLens support reduced motion preferences?",
+  a: "The interface can minimize unnecessary animations to support users who prefer reduced motion for accessibility reasons.",
   }
 ];

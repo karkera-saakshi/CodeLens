@@ -12,7 +12,7 @@ export const analyticsDashboardFaqs = [
   {
     id: "compare-stats",
     q: "Can I compare my stats with other users?",
-    a: "CodeLens may allow comparative analytics to benchmark your progress with other developers.",
+    a: "CodeLens provides analytics tools that help users compare coding activity and track performance trends over time.",
   },
   {
     id: "heatmap",

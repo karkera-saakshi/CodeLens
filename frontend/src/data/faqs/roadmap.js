@@ -2,26 +2,26 @@ export const roadmapFaqs = [
   {
     id: "planned-features",
     q: "What features are planned for CodeLens?",
-    a: "Future updates may include better analytics, more platform integrations, and UI improvements.",
+    a: "The roadmap currently focuses on improving analytics features, expanding platform integrations, and refining the overall user experience.",
   },
   {
     id: "future-platforms",
-    q: "Will CodeLens support more platforms in the future?",
-    a: "Yes. Future development may expand support to additional coding platforms.",
+    q: "Are additional platform integrations part of the roadmap?",
+    a: "Expanding support for additional developer and competitive programming platforms is part of the current roadmap.",
   },
   {
     id: "mobile-app",
     q: "Is there a mobile app planned?",
-    a: "Mobile support may be considered as the platform grows.",
+    a: "CodeLens does not currently offer a dedicated mobile app. The platform is currently optimized for web access across devices.",
   },
   {
-  id: "new-platform-support",
-  q: "Will more coding platforms be supported in future?",
-  a: "Future development may include support for additional developer platforms based on community demand.",
+  id: "feature-roadmap",
+  q: "Who decides which new features get added to CodeLens?",
+  a: "Feature planning is guided by community feedback, contributor discussions, and the long-term goals of the project.",
   },
   {
-  id: "community-priority",
-  q: "Does community feedback influence the roadmap?",
-  a: "Community suggestions and contribution discussions can help shape future platform priorities.",
+  id: "contribution-roadmap",
+  q: "Can contributors work on roadmap features?",
+  a: "Contributors can work on roadmap items discussed in project issues while following the established contribution guidelines.",
   }
 ];

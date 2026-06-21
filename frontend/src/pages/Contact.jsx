@@ -2,16 +2,12 @@ const Contact = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         alert("Message sent!");
-        e.target.reset();
+        e.currentTarget.reset();
     };
 
     return (
         <main>
-            <title>Contact- CodeLens</title>
-            <meta
-                name="description"
-                content="Get in touch with the CodeLens team. Have questions, feedback, or need support? Contact us and we'll be happy to help."
-            />
+            
             <section className="border-b-4 border-black px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
                 <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
                     <div className="flex flex-col gap-3">
@@ -99,9 +95,22 @@ const Contact = () => {
                                 <input name="firstName" type="text" placeholder="First name" className="w-full border-2 border-black text-base font-bold leading-relaxed uppercase p-1" />
                                 <input name="lastName" type="text" placeholder="Last name" className="w-full border-2 border-black text-base font-bold leading-relaxed uppercase p-1" />
                             </div>
-                            <input name="email" type="email" placeholder="Email address" className="w-full border-2 border-black text-base font-bold leading-relaxed uppercase p-1" />
+                            <input
+                                name="email"
+                                type="email"
+                                autoComplete="email"
+                                required
+                                placeholder="Email address"
+                                className="w-full border-2 border-black text-base font-bold leading-relaxed uppercase p-1"
+                            />
                             <input name="subject" type="text" placeholder="Subject" className="w-full border-2 border-black text-base font-bold leading-relaxed uppercase p-1" />
-                            <textarea name="message" rows={6} type="text" placeholder="Your message" className="w-full border-2 border-black text-base font-bold leading-relaxed uppercase p-1" />
+                            <textarea 
+                                name="message" 
+                                rows={6} 
+                                type="text" 
+                                placeholder="Your message" 
+                                className="w-full border-2 border-black text-base font-bold leading-relaxed uppercase p-1" 
+                            />
                             <button type="submit" className="w-full sm:w-auto px-8 sm:px-12 py-4 sm:py-6 bg-black text-white text-xl sm:text-xl md:text-xl font-black uppercase tracking-widest hover:bg-gray-800 transition-colors border-4 border-black sm:border-l-[0px] rounded-none shadow-[4px_4px_0_0_rgba(0,0,0,1)] sm:shadow-[8px_8px_0_0_rgba(0,0,0,1)] sm:shadow-none sm:hover:-translate-y-1 sm:hover:shadow-[8px_8px_0_0_rgba(0,0,0,1)]">Send message</button>
                         </form>
                     </div>

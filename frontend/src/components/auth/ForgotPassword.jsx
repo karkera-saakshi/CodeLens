@@ -12,6 +12,7 @@ export default function ForgotPassword() {
   const [loading, setLoading] = useState(false);
   const [cooldown, setCooldown] = useState(0);
   const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isUnverifiedError, setIsUnverifiedError] = useState(false);
 
   const navigate = useNavigate();
 
@@ -42,6 +43,7 @@ export default function ForgotPassword() {
   const handleSendResetCode = async (e) => {
     e.preventDefault();
     setError('');
+    setIsUnverifiedError(false);
 
     const trimmedEmail = email.trim();
 
@@ -57,7 +59,14 @@ export default function ForgotPassword() {
       setStep(2);
       setCooldown(60);
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to send reset code');
+      const status = err.response?.status;
+      const msg = err.response?.data?.message || 'Failed to send reset code';
+      setError(msg);
+      // 403 = user exists but is not yet verified
+      // Guide them to complete signup verification instead
+      if (status === 403) {
+        setIsUnverifiedError(true);
+      }
     } finally {
       setLoading(false);
     }
@@ -129,6 +138,17 @@ export default function ForgotPassword() {
             <p className="text-sm font-black uppercase tracking-widest text-red-600">
               {error}
             </p>
+            {/* If unverified, guide them to complete signup instead */}
+            {isUnverifiedError && (
+              <div className="mt-3 pt-3 border-t border-red-300">
+                <Link
+                  to="/signup"
+                  className="text-xs font-black uppercase tracking-widest text-red-600 underline underline-offset-4 decoration-[2px] hover:text-red-800"
+                >
+                  Go back to verify your email →
+                </Link>
+              </div>
+            )}
           </div>
         )}
 
@@ -153,6 +173,7 @@ export default function ForgotPassword() {
               <input
                 type="email"
                 id="email"
+                name="email"
                 value={email}
                 autoComplete="email"
                 aria-describedby={
@@ -212,13 +233,16 @@ export default function ForgotPassword() {
             </p>
 
             <div className="flex flex-col space-y-3">
-              <label className="text-sm font-black uppercase tracking-widest text-black">
+              <label 
+                htmlFor="otp"
+                className="text-sm font-black uppercase tracking-widest text-black">
                 Verification Code
               </label>
               <input
                 type="text"
                 value={otp}
                 id="otp"
+                name="otp"
                 inputMode="text"
                 aria-invalid={otp.length > 0 && !isOtpValid}
                 onChange={(e) =>
@@ -257,6 +281,7 @@ export default function ForgotPassword() {
                 aria-invalid={newPassword.length > 0 && !isPasswordValid}
                 value={newPassword}
                 id="new-password"
+                name="newPassword"
                 onChange={(e) => setNewPassword(e.target.value)}
                 className="w-full p-5 border-4 border-black rounded-none text-black font-bold focus:outline-none focus:ring-0 focus:border-gray-500"
                 placeholder="••••••••"
@@ -285,6 +310,7 @@ export default function ForgotPassword() {
                 aria-invalid={confirmPassword.length > 0 && !doPasswordsMatch}
                 value={confirmPassword}
                 id="confirm-password"
+                name="confirmPassword"
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full p-5 border-4 border-black rounded-none text-black font-bold focus:outline-none focus:ring-0 focus:border-gray-500"
                 placeholder="••••••••"

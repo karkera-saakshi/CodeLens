@@ -68,6 +68,7 @@ export default function VerifyModal({
           <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tighter leading-none">
             {step === 1 ? "Connect Codeforces" : "Verify Identity"}
           </h2>
+
           <button
             onClick={onClose}
             className="text-2xl font-black hover:bg-black hover:text-white w-10 h-10 flex items-center justify-center border-[3px] border-black transition-colors"
@@ -78,27 +79,46 @@ export default function VerifyModal({
 
         {/* Body */}
         <div className="px-8 py-10 space-y-8">
+
           {step === 1 && (
             <>
               <p className="font-bold uppercase tracking-widest text-sm leading-relaxed text-gray-700">
                 Enter your Codeforces handle below. We will generate a unique code for you to set as your Codeforces Last Name to prove ownership.
               </p>
-              <div className="flex flex-col sm:flex-row gap-0">
-                <input
-                  type="text"
-                  placeholder="e.g. tourist"
-                  value={handle}
-                  onChange={(e) => setHandle(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleInitiate()}
-                  className="flex-1 px-6 py-4 border-[4px] border-black text-lg font-bold uppercase tracking-widest focus:outline-none bg-gray-50 rounded-none"
-                />
-                <button
-                  onClick={handleInitiate}
-                  disabled={connectLoading}
-                  className="px-8 py-4 bg-black text-white font-black uppercase tracking-widest border-[4px] border-black sm:border-l-0 hover:bg-gray-800 transition-colors disabled:opacity-50 rounded-none"
+
+              <div className="space-y-2">
+                <label
+                  htmlFor="handle"
+                  className="font-bold uppercase tracking-widest text-sm text-gray-700"
                 >
-                  {connectLoading ? "Checking..." : "Generate Code →"}
-                </button>
+                  Codeforces Handle
+                </label>
+
+                <div className="flex flex-col sm:flex-row gap-0">
+                  <input
+                    type="text"
+                    id="handle"
+                    name="handle"
+                    placeholder="e.g. tourist"
+                    value={handle}
+                    onChange={(e) => setHandle(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        handleInitiate();
+                      }
+                    }}
+                    className="flex-1 px-6 py-4 border-[4px] border-black text-lg font-black uppercase tracking-widest focus:outline-none bg-gray-50 rounded-none"
+                  />
+
+                  <button
+                    onClick={handleInitiate}
+                    disabled={connectLoading}
+                    className="px-8 py-4 bg-black text-white font-black uppercase tracking-widest border-[4px] border-black sm:border-l-0 hover:bg-gray-800 transition-colors disabled:opacity-50 rounded-none"
+                  >
+                    {connectLoading ? "Checking..." : "Generate Code →"}
+                  </button>
+                </div>
               </div>
             </>
           )}
@@ -108,19 +128,20 @@ export default function VerifyModal({
               <p className="font-bold uppercase tracking-widest text-sm leading-relaxed text-gray-700">
                 Follow these steps carefully:
               </p>
+
               <ol className="space-y-4 list-none">
                 {[
                   `Go to codeforces.com/settings`,
                   `Set your Last Name to the code below`,
                   `Click Save and return here`,
                   `Click Verify — we will check and link your account`,
-                ].map((step, i) => (
+                ].map((stepText, i) => (
                   <li key={i} className="flex items-start gap-4">
                     <span className="flex-shrink-0 w-8 h-8 bg-black text-white font-black text-sm flex items-center justify-center">
                       {i + 1}
                     </span>
                     <span className="font-bold uppercase tracking-widest text-sm leading-relaxed pt-1">
-                      {step}
+                      {stepText}
                     </span>
                   </li>
                 ))}
@@ -146,6 +167,7 @@ export default function VerifyModal({
                 >
                   ← Back
                 </button>
+
                 <button
                   onClick={handleVerify}
                   disabled={connectLoading}
@@ -157,12 +179,14 @@ export default function VerifyModal({
             </>
           )}
 
-          {/* Error */}
           {error && (
             <div className="border-[3px] border-black bg-black text-white px-6 py-4">
-              <p className="font-black uppercase tracking-widest text-sm">{error}</p>
+              <p className="font-black uppercase tracking-widest text-sm">
+                {error}
+              </p>
             </div>
           )}
+
         </div>
       </div>
     </div>

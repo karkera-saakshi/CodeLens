@@ -38,7 +38,13 @@ export default function SubscribeNewsletter() {
           onSubmit={handleSubmit}
           className="w-full max-w-3xl mx-auto flex flex-col sm:flex-row gap-4 sm:gap-0"
         >
+
+          <label htmlFor="newsletter-email" className="sr-only">
+            Email address
+          </label>
+
           <input
+            id="newsletter-email"
             type="email"
             autoComplete="email"
             placeholder="YOUR@EMAIL.COM"

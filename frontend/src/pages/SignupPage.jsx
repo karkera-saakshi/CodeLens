@@ -8,7 +8,6 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL;
 /**
  * Scores a password 0-5 based on length, case mix, numbers, and symbols.
  * Pure function — no UI dependency, easy to unit test on its own.
- * TODO: move to utils/passwordStrength.js if the project has a utils folder.
  */
 function getPasswordStrength(password) {
   if (!password) {
@@ -24,10 +23,21 @@ function getPasswordStrength(password) {
   };
 
   const score = Object.values(checks).filter(Boolean).length;
-  let label;
-  if (score <= 2) label = "Weak";
-  else if (score <= 3) label = "Medium";
-  else label = "Strong";
+
+  const visibleScore = [
+    checks.length,
+    checks.case,
+    checks.number,
+    checks.symbol,
+  ].filter(Boolean).length;
+
+  let label = "Weak";
+
+  if (visibleScore === 4) {
+    label = "Strong";
+  } else if (visibleScore >= 3) {
+    label = "Medium";
+  }
 
   return { score, label, checks };
 }
@@ -40,8 +50,6 @@ function defaultChecks() {
  * PasswordStrengthMeter — monochrome, matches the site's sharp-edged
  * black/white design system. No color signal; uses fill count + bold
  * uppercase type instead, consistent with the rest of this form.
- * TODO: move to components/PasswordStrengthMeter.jsx if the project
- * has a components folder.
  */
 function PasswordStrengthMeter({ password }) {
   const { score, label, checks } = getPasswordStrength(password);

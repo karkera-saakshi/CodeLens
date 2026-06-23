@@ -8,6 +8,12 @@ export default function ComingSoonModal({ isOpen, onClose, featureName }) {
   useEffect(() => {
     if (!isOpen) return;
 
+    // Store the element that was focused before modal opened
+    const previouslyFocused = document.activeElement;
+
+    // Prevent background scroll
+    document.body.style.overflow = "hidden";
+
     // Focus the close button when modal opens
     closeButtonRef.current?.focus();
 
@@ -40,7 +46,16 @@ export default function ComingSoonModal({ isOpen, onClose, featureName }) {
     };
 
     document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      // Restore background scroll
+      document.body.style.overflow = "";
+      // Restore focus to the element that opened the modal
+      if (previouslyFocused) {
+        previouslyFocused.focus();
+      }
+    };
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;

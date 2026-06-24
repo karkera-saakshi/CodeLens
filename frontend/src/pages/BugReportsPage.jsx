@@ -161,10 +161,10 @@ const BugReportsPage = () => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           {[
-            { icon: <MonitorSmartphone />, title: "Interface", desc: "Layout breaks, responsive issues, or typography errors on any device.", color: "bg-blue-300" },
-            { icon: <Zap />, title: "Performance", desc: "Slow load times, rendering lag, or memory leaks impacting usability.", color: "bg-yellow-300" },
-            { icon: <Terminal />, title: "Functionality", desc: "Broken buttons, form submission failures, or routing 404s.", color: "bg-green-300" },
-            { icon: <Server />, title: "Backend API", desc: "Syncing issues with GitHub/Codeforces, timeouts, or data mismatches.", color: "bg-red-300" },
+            { icon: <MonitorSmartphone />, title: "Interface", desc: "Layout breaks, responsive issues, or typography errors on any device.", color: "bg-white" },
+            { icon: <Zap />, title: "Performance", desc: "Slow load times, rendering lag, or memory leaks impacting usability.", color: "bg-white" },
+            { icon: <Terminal />, title: "Functionality", desc: "Broken buttons, form submission failures, or routing 404s.", color: "bg-white" },
+            { icon: <Server />, title: "Backend API", desc: "Syncing issues with GitHub/Codeforces, timeouts, or data mismatches.", color: "bg-white" },
           ].map((feature, idx) => (
             <motion.div 
               key={idx}

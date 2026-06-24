@@ -312,8 +312,8 @@ const BugReportsPage = () => {
           {/* Enhanced Checkbox background */}
           <motion.div variants={popIn} className="relative mb-12 group">
             {/* Multi-layered staggered shapes */}
-            <div className="absolute inset-0 bg-blue-500 rounded-[30%] rotate-[15deg] group-hover:rotate-[45deg] group-hover:scale-110 transition-transform duration-500 shadow-xl"></div>
-            <div className="absolute inset-0 bg-purple-500 rounded-[30%] -rotate-[15deg] group-hover:-rotate-[45deg] group-hover:scale-110 transition-transform duration-500 shadow-xl mix-blend-multiply"></div>
+            <div className="absolute inset-0 bg-black  rounded-[30%] rotate-[15deg] group-hover:rotate-[45deg] group-hover:scale-110 transition-transform duration-500 shadow-xl"></div>
+            <div className="absolute inset-0 bg-zinc-400 rounded-[30%] -rotate-[15deg] group-hover:-rotate-[45deg] group-hover:scale-110 transition-transform duration-500 shadow-xl mix-blend-multiply"></div>
             
             <div className="relative w-28 h-28 bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rounded-full flex items-center justify-center z-10 group-hover:-translate-y-2 group-hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all duration-300">
               <CheckCircle className="w-14 h-14 text-black" />

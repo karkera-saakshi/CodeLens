@@ -5,22 +5,116 @@ import * as authService from "../services/authService";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
+/**
+ * Scores a password 0-5 based on length, case mix, numbers, and symbols.
+ * Pure function — no UI dependency, easy to unit test on its own.
+ */
+function getPasswordStrength(password) {
+  if (!password) {
+    return { score: 0, label: "", checks: defaultChecks() };
+  }
+
+  const checks = {
+    length: password.length >= 8,
+    longLength: password.length >= 12,
+    case: /[a-z]/.test(password) && /[A-Z]/.test(password),
+    number: /\d/.test(password),
+    symbol: /[^A-Za-z0-9]/.test(password),
+  };
+
+  const score = Object.values(checks).filter(Boolean).length;
+
+  const visibleScore = [
+    checks.length,
+    checks.case,
+    checks.number,
+    checks.symbol,
+  ].filter(Boolean).length;
+
+  let label = "Weak";
+
+  if (visibleScore === 4) {
+    label = "Strong";
+  } else if (visibleScore >= 3) {
+    label = "Medium";
+  }
+
+  return { score, label, checks };
+}
+
+function defaultChecks() {
+  return { length: false, longLength: false, case: false, number: false, symbol: false };
+}
+
+/**
+ * PasswordStrengthMeter — monochrome, matches the site's sharp-edged
+ * black/white design system. No color signal; uses fill count + bold
+ * uppercase type instead, consistent with the rest of this form.
+ */
+function PasswordStrengthMeter({ password }) {
+  const { score, label, checks } = getPasswordStrength(password);
+  if (!password) return null;
+
+  const segmentsFilled = Math.min(3, Math.ceil((score / 5) * 3));
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center gap-3">
+        <div className="flex flex-1 gap-2">
+          {[0, 1, 2].map((i) => (
+            <div key={i} className="h-3 flex-1 border-4 border-black bg-white">
+              <div
+                className="h-full bg-black transition-all duration-200 ease-out"
+                style={{ width: i < segmentsFilled ? "100%" : "0%" }}
+              />
+            </div>
+          ))}
+        </div>
+        <span role="status" className="text-xs font-black uppercase tracking-widest text-black">
+          {label}
+        </span>
+      </div>
+
+      <ul className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+        <StrengthCheckItem ok={checks.length}>8+ Characters</StrengthCheckItem>
+        <StrengthCheckItem ok={checks.case}>Upper &amp; Lower</StrengthCheckItem>
+        <StrengthCheckItem ok={checks.number}>A Number</StrengthCheckItem>
+        <StrengthCheckItem ok={checks.symbol}>A Symbol</StrengthCheckItem>
+      </ul>
+    </div>
+  );
+}
+
+function StrengthCheckItem({ ok, children }) {
+  return (
+    <li className="flex items-center gap-2 text-[11px] font-black uppercase tracking-wide">
+      <span
+        className={`flex h-3.5 w-3.5 items-center justify-center border-2 border-black text-[9px] leading-none ${ok ? "bg-black text-white" : "bg-white text-black"
+          }`}
+      >
+        {ok ? "✓" : "·"}
+      </span>
+      <span className={ok ? "text-black" : "text-black/40"}>{children}</span>
+    </li>
+  );
+}
+
 export default function SignupPage() {
-  const [step, setStep]           = useState(1);
-  const [name, setName]           = useState("");
-  const [email, setEmail]         = useState("");
-  const [password, setPassword]   = useState("");
-  const [otp, setOtp]             = useState("");
-  const [error, setError]         = useState("");
-  const [loading, setLoading]     = useState(false);
-  const [cooldown, setCooldown]   = useState(0);
+  const [step, setStep] = useState(1);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [otp, setOtp] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
   const [isEmailValid, setIsEmailValid] = useState(true);
 
   const { login, isAuthenticated } = useAuth();
-  const navigate                   = useNavigate();
-  const location                   = useLocation();
-  const [searchParams]             = useSearchParams();
-  const isPasswordValid            = password.length >= 6;
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const isPasswordValid = password.length >= 6;
 
   // Show GitHub OAuth errors forwarded from the callback
   useEffect(() => {
@@ -48,7 +142,7 @@ export default function SignupPage() {
       // Clear router state so browser back/forward doesn't replay this
       window.history.replaceState({}, document.title);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -232,6 +326,7 @@ export default function SignupPage() {
                   </p>
                 )}
               </div>
+              <PasswordStrengthMeter password={password} />
             </div>
 
             <button

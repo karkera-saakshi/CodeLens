@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Bug, MonitorSmartphone, Zap, AlertTriangle, CheckCircle, FileText, ArrowRight, Code, Terminal, Server, ShieldCheck } from "lucide-react";
+import { Bug, MonitorSmartphone, Zap, CheckCircle, FileText, ArrowRight, Code, Terminal, Server, ShieldCheck } from "lucide-react";
 import { useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 const BugReportsPage = () => {
@@ -42,7 +42,7 @@ const BugReportsPage = () => {
         <div className="absolute inset-0 bg-[radial-gradient(#94a3b8_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.15] pointer-events-none z-0"></div>
 
         <motion.div 
-          className="relative z-20 max-w-5xl w-full mx-autot"
+          className="relative z-20 max-w-5xl w-full mx-auto"
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
@@ -77,34 +77,42 @@ const BugReportsPage = () => {
             </motion.p>
           
           {/* Organized Stats Row with Animations */}
-          <div className="flex flex-nowrap items-center justify-start gap-4 sm:gap-6 mb-12">
-            <motion.div variants={popIn} whileHover={{ y: -5, scale: 1.05 }} className="flex items-center gap-4 px-6 py-2.5 bg-white backdrop-blur-xl border-2 border-black rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] cursor-default">
-              <div className="w-8 h-8 rounded-none bg-black border-2 border-black flex items-center justify-center shadow-sm">
-                <CheckCircle className="w-4 h-4 text-white" />
+          <div className="flex flex-nowrap items-center justify-start gap-2 sm:gap-4 mb-12">
+          <motion.div
+            variants={popIn}
+            whileHover={{ y: -5, scale: 1.05 }}
+            className="flex-1 min-w-0 flex items-center gap-2 sm:gap-4 px-3 sm:px-6 py-2 bg-white backdrop-blur-xl border-2 border-black rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] cursor-default"
+          >
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-none bg-black border-2 border-black flex items-center justify-center shadow-sm shrink-0">
+              <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+            </div>
+            <div className="text-left min-w-0">
+              <p className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.12em] sm:tracking-widest text-black/60 leading-none mb-1">
+                System Status
+              </p>
+              <p className="text-xs sm:text-sm font-black uppercase leading-none text-black">
+                All Nominal
+              </p>
+            </div>
+          </motion.div>
+
+            <motion.div variants={popIn} whileHover={{ y: -5, scale: 1.05 }} className="flex-1 min-w-0 flex items-center gap-2 sm:gap-4 px-3 sm:px-6 py-2 bg-white backdrop-blur-xl border-2 border-black rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] cursor-default">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-none bg-black border-2 border-black flex items-center justify-center shadow-sm shrink-0">
+                <Bug className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
               </div>
-              <div className="text-left">
-                <p className="text-[9px] font-black uppercase tracking-widest text-black/60 leading-none mb-1">System Status</p>
-                <p className="text-sm font-black uppercase leading-none text-black">All Nominal</p>
+              <div className="text-left min-w-0">
+                <p className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.12em] sm:tracking-widest text-black/60 leading-none mb-1">Avg Resolution</p>
+                <p className="text-xs sm:text-sm font-black uppercase leading-none text-black">&lt; 24 Hours</p>
               </div>
             </motion.div>
 
-            <motion.div variants={popIn} whileHover={{ y: -5, scale: 1.05 }} className="flex items-center gap-4 px-6 py-2.5 bg-white backdrop-blur-xl border-2 border-black rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] cursor-default">
-              <div className="w-8 h-8 rounded-none bg-black border-2 border-black flex items-center justify-center shadow-sm">
-                <Bug className="w-4 h-4 text-white" />
+            <motion.div variants={popIn} whileHover={{ y: -5, scale: 1.05 }} className="flex-1 min-w-0 flex items-center gap-2 sm:gap-4 px-3 sm:px-6 py-2 bg-white backdrop-blur-xl border-2 border-black rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] cursor-default">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-none bg-black border-2 border-black flex items-center justify-center shadow-sm shrink-0">
+                <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-none bg-white animate-pulse"></div>
               </div>
-              <div className="text-left">
-                <p className="text-[9px] font-black uppercase tracking-widest text-black/60  leading-none mb-1">Avg Resolution</p>
-                <p className="text-sm font-black uppercase leading-none text-black">&lt; 24 Hours</p>
-              </div>
-            </motion.div>
-
-            <motion.div variants={popIn} whileHover={{ y: -5, scale: 1.05 }} className="flex items-center gap-4 px-6 py-2.5 bg-white backdrop-blur-xl border-2 border-black rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] cursor-default">
-              <div className="w-8 h-8 rounded-none bg-black border-2 border-black flex items-center justify-center shadow-sm">
-                <div className="w-2.5 h-2.5 rounded-none bg-white animate-pulse"></div>
-              </div>
-              <div className="text-left">
-                <p className="text-[9px] font-black uppercase tracking-widest text-black/60 leading-none mb-1">Project Type</p>
-                <p className="text-sm font-black uppercase leading-none text-black">Open Source</p>
+              <div className="text-left min-w-0">
+                <p className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.12em] sm:tracking-widest text-black/60 leading-none mb-1">Project Type</p>
+                <p className="text-xs sm:text-sm font-black uppercase leading-none text-black">Open Source</p>
               </div>
             </motion.div>
           </div>

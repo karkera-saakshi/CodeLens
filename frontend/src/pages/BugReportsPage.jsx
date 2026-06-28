@@ -77,7 +77,7 @@ const BugReportsPage = () => {
             </motion.p>
           
           {/* Organized Stats Row with Animations */}
-          <div className="flex flex-nowrap items-center justify-start gap-2 sm:gap-4 mb-12">
+          <div className="flex flex-wrap lg:flex-nowrap items-center justify-start gap-2 sm:gap-4 mb-12">
           <motion.div
             variants={popIn}
             whileHover={{ y: -5, scale: 1.05 }}
